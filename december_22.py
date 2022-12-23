@@ -238,5 +238,19 @@ class Solution(object):
             return targetSum == root.val
         return self.hasPathSum(root.left, targetSum - root.val) or self.hasPathSum(root.right, targetSum - root.val)
         return self.hasPathSum(root.left, hasPathSum - root.val) or self.hasPathSum(root.right, hasPathSum - root.val)
+'''
+Given two binary strings a and b, return their sum as a binary string.
+'''
+class Solution(object):
+    def addBinary(self, a, b):
+        return bin(int(a, 2) + int(b, 2))[2:]
+a = "11"
+b = "1"
+print(Solution().addBinary(a, b))
+# Output: "100"
+a = "1010"
+b = "1011"
+print(Solution().addBinary(a, b))
+# Output: "10101"
 
 
