@@ -285,3 +285,48 @@ n = 3
 print(Solution().climbStairs(n))
 # Output: 3
 
+
+'''
+Given the root of a binary tree, return the inorder traversal of its nodes' values.
+
+'''
+class Solution(object):
+    def inorderTraversal(self, root):
+        res = []
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            res.append(root.val)
+            root = root.right
+        return res
+root = [1,null,2,3]
+print(Solution().inorderTraversal(root))
+# Output: [1,3,2]
+
+'''
+Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.
+For example:
+A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28 
+...
+'''
+class Solution(object):
+    def convertToTitle(self, columnNumber):
+        res = ""
+        while columnNumber:
+            columnNumber -= 1
+            res = chr(columnNumber % 26 + 65) + res
+            columnNumber //= 26
+        return res
+columnNumber = 1
+print(Solution().convertToTitle(columnNumber))
+# Output: "A"
+
