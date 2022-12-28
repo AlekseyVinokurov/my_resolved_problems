@@ -193,7 +193,6 @@ for n in range(1, 100):
                 print(n, k, m)
                 break
 
-
 '''
 Имеется 100 рублей. Сколько быков, коров и телят можно купить на все эти деньги, если плата за быка – 10 рублей, 
 за корову – 5 рублей, за теленка – 0.5 рубля и надо купить 100 голов скота?
@@ -209,12 +208,16 @@ for b in range(1, 100):
 Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.
 In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
 '''
+
+
 class Solution(object):
     def getRow(self, rowIndex):
         res = [1]
         for i in range(rowIndex):
             res = [x + y for x, y in zip([0] + res, res + [0])]
         return res
+
+
 rowIndex = 3
 print(Solution().getRow(rowIndex))
 # Output: [1,3,3,1]
@@ -230,6 +233,8 @@ Given the root of a binary tree and an integer targetSum, return true if the tre
 adding up all the values along the path equals targetSum.
 A leaf is a node with no children.
 '''
+
+
 class Solution(object):
     def hasPathSum(self, root, targetSum):
         if not root:
@@ -238,12 +243,18 @@ class Solution(object):
             return targetSum == root.val
         return self.hasPathSum(root.left, targetSum - root.val) or self.hasPathSum(root.right, targetSum - root.val)
         return self.hasPathSum(root.left, hasPathSum - root.val) or self.hasPathSum(root.right, hasPathSum - root.val)
+
+
 '''
 Given two binary strings a and b, return their sum as a binary string.
 '''
+
+
 class Solution(object):
     def addBinary(self, a, b):
         return bin(int(a, 2) + int(b, 2))[2:]
+
+
 a = "11"
 b = "1"
 print(Solution().addBinary(a, b))
@@ -258,9 +269,13 @@ print(Solution().addBinary(a, b))
 Given a string s consisting of words and spaces, return the length of the last word in the string.
 A word is a maximal substring consisting of non-space characters only.
 '''
+
+
 class Solution(object):
     def lengthOfLastWord(self, s):
         return len(s.strip().split(" ")[-1])
+
+
 s = "Hello World"
 print(Solution().lengthOfLastWord(s))
 # Output: 5
@@ -272,12 +287,16 @@ print(Solution().lengthOfLastWord(s))
 You are climbing a staircase. It takes n steps to reach the top.
 Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 '''
+
+
 class Solution(object):
     def climbStairs(self, n):
         a = b = 1
         for _ in range(n):
             a, b = b, a + b
         return a
+
+
 n = 2
 print(Solution().climbStairs(n))
 # Output: 2
@@ -290,6 +309,8 @@ print(Solution().climbStairs(n))
 Given the root of a binary tree, return the inorder traversal of its nodes' values.
 
 '''
+
+
 class Solution(object):
     def inorderTraversal(self, root):
         res = []
@@ -302,7 +323,9 @@ class Solution(object):
             res.append(root.val)
             root = root.right
         return res
-root = [1,null,2,3]
+
+
+#root = [1, null, 2, 3]
 print(Solution().inorderTraversal(root))
 # Output: [1,3,2]
 
@@ -318,6 +341,8 @@ AA -> 27
 AB -> 28 
 ...
 '''
+
+
 class Solution(object):
     def convertToTitle(self, columnNumber):
         res = ""
@@ -326,7 +351,87 @@ class Solution(object):
             res = chr(columnNumber % 26 + 65) + res
             columnNumber //= 26
         return res
+
+
 columnNumber = 1
 print(Solution().convertToTitle(columnNumber))
 # Output: "A"
 
+'''
+You are given a 0-indexed integer array piles, where piles[i] represents the number of stones in the ith pile, and an integer k. You should apply the following operation exactly k times:
+Choose any piles[i] and remove floor(piles[i] / 2) stones from it.
+Notice that you can apply the operation on the same pile more than once.
+Return the minimum possible total number of stones remaining after applying the k operations.
+floor(x) is the greatest integer that is smaller than or equal to x (i.e., rounds x down).
+'''
+
+
+class Solution:
+    def minStoneSum(self, piles, k):
+        piles.sort(reverse=True)
+        for i in range(k):
+            piles[0] = piles[0] - piles[0] // 2
+            piles.sort(reverse=True)
+        return sum(piles)
+
+
+piles = [5, 4, 9]
+k = 2
+print(Solution().minStoneSum(piles, k))
+# Output: 12
+
+
+'''
+We want to split a group of n people (labeled from 1 to n) into two groups of any size. Each person may dislike some other people, and they should not go into the same group.
+Given the integer n and the array dislikes where dislikes[i] = [ai, bi] indicates that the person labeled ai does not like the person labeled bi, return true if it is possible to split everyone into two groups in this way.
+'''
+
+
+class Solution(object):
+    def possibleBipartition(self, n, dislikes):
+        graph = [[] for _ in range(n + 1)]
+        for u, v in dislikes:
+            graph[u].append(v)
+            graph[v].append(u)
+        color = [0] * (n + 1)
+        for i in range(1, n + 1):
+            if color[i] == 0:
+                color[i] = 1
+                queue = [i]
+                while queue:
+                    node = queue.pop(0)
+                    for neighbor in graph[node]:
+                        if color[neighbor] == color[node]:
+                            return False
+                        if color[neighbor] == 0:
+                            color[neighbor] = -color[node]
+                            queue.append(neighbor)
+        return True
+
+
+n = 4
+dislikes = [[1, 2], [1, 3], [2, 4]]
+print(Solution().possibleBipartition(n, dislikes))
+# Output: true
+n = 3
+dislikes = [[1, 2], [1, 3], [2, 3]]
+print(Solution().possibleBipartition(n, dislikes))
+# Output: false
+
+'''
+Given the root of a binary tree, return the preorder traversal of its nodes' values.
+'''
+
+
+class Solution(object):
+    def preorderTraversal(self, root):
+        res = []
+        stack = []
+        while stack or root:
+            while root:
+                res.append(root.val)
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            root = root.right
+        return res
