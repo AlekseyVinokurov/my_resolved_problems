@@ -9,6 +9,7 @@ You can return the answer in any order.
 '''
 
 
+
 class Solution:
     def twoSum(self, nums, target):
         for i in range(len(nums)):
@@ -435,3 +436,29 @@ class Solution(object):
             root = stack.pop()
             root = root.right
         return res
+'''
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+'''
+class Solution(object):
+    def isSameTree(self, p, q):
+        if not p and not q:
+            return True
+        if not p or not q:
+            return False
+        return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+p = [1,2,3]
+q = [1,2,3]
+print(Solution().isSameTree(p, q))
+# Output: true
+
+'''
+Given an array nums of size n, return the majority element.
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+'''
+class Solution(object):
+    def majorityElement(self, nums):
+        return sorted(nums)[len(nums)//2]
+nums = [3,2,3]
+print(Solution().majorityElement(nums))
+# Output: 3
