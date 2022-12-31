@@ -9,7 +9,6 @@ You can return the answer in any order.
 '''
 
 
-
 class Solution:
     def twoSum(self, nums, target):
         for i in range(len(nums)):
@@ -326,7 +325,7 @@ class Solution(object):
         return res
 
 
-#root = [1, null, 2, 3]
+# root = [1, null, 2, 3]
 print(Solution().inorderTraversal(root))
 # Output: [1,3,2]
 
@@ -436,10 +435,14 @@ class Solution(object):
             root = stack.pop()
             root = root.right
         return res
+
+
 '''
 Given the roots of two binary trees p and q, write a function to check if they are the same or not.
 Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 '''
+
+
 class Solution(object):
     def isSameTree(self, p, q):
         if not p and not q:
@@ -447,8 +450,10 @@ class Solution(object):
         if not p or not q:
             return False
         return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
-p = [1,2,3]
-q = [1,2,3]
+
+
+p = [1, 2, 3]
+q = [1, 2, 3]
 print(Solution().isSameTree(p, q))
 # Output: true
 
@@ -456,10 +461,14 @@ print(Solution().isSameTree(p, q))
 Given an array nums of size n, return the majority element.
 The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
 '''
+
+
 class Solution(object):
     def majorityElement(self, nums):
-        return sorted(nums)[len(nums)//2]
-nums = [3,2,3]
+        return sorted(nums)[len(nums) // 2]
+
+
+nums = [3, 2, 3]
 print(Solution().majorityElement(nums))
 # Output: 3
 
@@ -485,7 +494,7 @@ Sample Output:
 4 5 6
 '''
 num = 0
-for i in range(1, int(input())+1):
+for i in range(1, int(input()) + 1):
     for j in range(i):
         num += 1
         print(num, end=' ')
@@ -497,27 +506,82 @@ n - 1 and return them in any order.
 The graph is given as follows: graph[i] is a list of all nodes you can visit from node i (i.e., there is a directed 
 edge from node i to node graph[i][j]).
 '''
+
+
 class Solution(object):
     def allPathsSourceTarget(self, graph):
         """
         :type graph: List[List[int]]
         :rtype: List[List[int]]
         """
+
         def back_tracker(node, path):
             if node == len(graph) - 1:
                 res.append(path)
                 return
             for nei in graph[node]:
                 back_tracker(nei, path + [nei])
+
         res = []
         back_tracker(0, [0])
         return res
-graph = [[1,2],[3],[3],[]]
+
+
+graph = [[1, 2], [3], [3], []]
 print(Solution().allPathsSourceTarget(graph))
 # Output: [[0,1,3],[0,2,3]]
-graph = [[4,3,1],[3,2,4],[3],[4],[]]
+graph = [[4, 3, 1], [3, 2, 4], [3], [4], []]
 print(Solution().allPathsSourceTarget(graph))
 # Output: [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
 # Output: [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
 
+'''
+You are given an m x n integer array grid where grid[i][j] could be:
+1 representing the starting square. There is exactly one starting square.
+2 representing the ending square. There is exactly one ending square.
+0 representing empty squares we can walk over.
+-1 representing obstacles that we cannot walk over.
+Return the number of 4-directional walks from the starting square to the ending square, that walk over every 
+non-obstacle square exactly once.
+'''
 
+
+class Solution:
+    def uniquePathsIII(self, grid):
+        m, n = len(grid), len(grid[0])
+        start, end = None, None
+        empty = 1
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    start = (i, j)
+                elif grid[i][j] == 2:
+                    end = (i, j)
+                elif grid[i][j] == 0:
+                    empty += 1
+
+        def new_step(i, j, empty):
+            if not (0 <= i < m and 0 <= j < n and grid[i][j] >= 0):
+                return 0
+            if (i, j) == end:
+                return int(empty == 0)
+            grid[i][j] = -2
+            res = new_step(i + 1, j, empty - 1) + new_step(i - 1, j, empty - 1) + new_step(i, j + 1,
+                                                                                           empty - 1) + new_step(i,
+                                                                                                                 j - 1,
+                                                                                                                 empty - 1)
+            grid[i][j] = 0
+            return res
+
+        return new_step(*start, empty)
+
+
+grid = [[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, -1]]
+print(Solution().uniquePathsIII(grid))
+# Output: 2
+grid = [[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 2]]
+print(Solution().uniquePathsIII(grid))
+# Output: 4
+grid = [[0, 1], [2, 0]]
+print(Solution().uniquePathsIII(grid))
+# Output: 0
