@@ -631,3 +631,93 @@ for i in range(a, b + 1):
         max_sum = sum_div
         max_num = i
 print(max_num, max_sum)
+
+
+'''
+Given a pattern and a string s, find if s follows the same pattern.
+Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in s.
+'''
+
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        words = s.split()
+        if len(pattern) != len(words):
+            return False
+        return len(set(zip(pattern, words))) == len(set(pattern)) == len(set(words))
+pattarn = 'abba'
+s = 'dog cat cat dog'
+print(Solution().wordPattern(pattarn, s))
+# Output: True
+pattarn = 'abba'
+s = 'dog cat cat fish'
+print(Solution().wordPattern(pattarn, s))
+# Output: False
+
+
+'''
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
+
+Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
+
+I can be placed before V (5) and X (10) to make 4 and 9. 
+X can be placed before L (50) and C (100) to make 40 and 90. 
+C can be placed before D (500) and M (1000) to make 400 and 900.
+Given a roman numeral, convert it to an integer.
+'''
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        roman = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        result = 0
+        for i in range(len(s)):
+            if i > 0 and roman[s[i]] > roman[s[i - 1]]:
+                result += roman[s[i]] - 2 * roman[s[i - 1]]
+            else:
+                result += roman[s[i]]
+        return result
+
+
+print(Solution().romanToInt('III'))
+# Output: 3
+print(Solution().romanToInt('MCMXCIV'))
+# Output: 1994
+
+
+'''
+Делители-2
+На вход программе подается натуральное число nn. Напишите программу, выводящую графическое изображение делимости чисел от 11 до nn включительно. В каждой строке надо напечатать очередное число и столько символов «+», сколько делителей у этого числа.
+
+Формат входных данных
+На вход программе подается одно натуральное число.
+
+Формат выходных данных
+Программа должна вывести графическое изображение чисел от 11 до nn, каждое на отдельной строке.
+Sample Input:
+
+5
+Sample Output:
+
+1+
+2++
+3++
+4+++
+5++
+'''
+n = int(input())
+for i in range(1, n + 1):
+    print(i, end='')
+    for j in range(1, i + 1):
+        if i % j == 0:
+            print('+', end='')
+    print()
+
+
