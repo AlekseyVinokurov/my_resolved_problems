@@ -68,3 +68,46 @@ for i in range(1, n + 1):
     factorial *= i
     sum += factorial
 print(sum)
+
+'''
+You are given the heads of two sorted linked lists list1 and list2.
+Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+Return the head of the merged linked list.
+'''
+class Solution(object):
+    def mergeTwoLists(self, list1, list2):
+        if list1 is None:
+            return list2
+        if list2 is None:
+            return list1
+        if list1.val < list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1, list2.next)
+            return list2
+list1 = [1,2,4]
+list2 = [1,3,4]
+print(Solution().mergeTwoLists(list1, list2))
+#Output: [1,1,2,3,4,4]
+
+'''
+На вход программе подается два натуральных числа aa и bb (a < ba< b). Напишите программу, которая находит все простые числа от aa до bb включительно.
+
+Формат входных данных
+На вход программе подаются два числа, каждое на отдельной строке.
+
+Формат выходных данных
+Программа должна вывести все простые числа от aa до bb включительно, каждое на отдельной строке.
+
+Примечание. Число 11 простым не является.
+'''
+a=int(input())
+b=int(input())
+for i in range(a,b+1):
+    if i>1:
+        for j in range(2,i):
+            if i%j==0:
+                break
+        else:
+            print(i)
