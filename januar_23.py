@@ -127,5 +127,50 @@ class Solution(object):
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
 
+'''
+It is a sweltering summer day, and a boy wants to buy some ice cream bars.
 
+At the store, there are n ice cream bars. You are given an array costs of length n, where costs[i] is the price of the ith ice cream bar in coins. The boy initially has coins coins to spend, and he wants to buy as many ice cream bars as possible. 
+
+Return the maximum number of ice cream bars the boy can buy with coins coins.
+
+Note: The boy can buy the ice cream bars in any order.
+'''
+from typing import List
+class Solution:
+
+    def maxIceCream(self, costs, coins):
+        costs.sort()
+        count = 0
+        for i in costs:
+            if coins >= i:
+                coins -= i
+                count += 1
+            else:
+                break
+        return count
+
+coins = 7
+costs = [1,3,2,4,1]
+#Output: 4
+'''
+Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The relative order of the elements may be changed.
+
+Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. It does not matter what you leave beyond the first k elements.
+
+Return k after placing the final result in the first k slots of nums.
+
+Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
+'''
+
+from typing import List
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        while val in nums:
+            nums.remove(val)
+        return len(nums)
+nums = [3,2,2,3]
+val = 3
+print(Solution().removeElement(nums, val))
+#Output: 2, nums = [2,2]
 
