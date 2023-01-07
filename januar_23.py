@@ -174,3 +174,44 @@ val = 3
 print(Solution().removeElement(nums, val))
 #Output: 2, nums = [2,2]
 
+'''
+There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
+
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station. You begin the journey with an empty tank at one of the gas stations.
+
+Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1. If there exists a solution, it is guaranteed to be unique
+'''
+from typing import List
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        n = len(gas)
+        for i in range(n):
+            if gas[i] >= cost[i]:
+                tank = gas[i] - cost[i]
+                j = (i + 1) % n
+                while j != i:
+                    tank += gas[j] - cost[j]
+                    if tank < 0:
+                        break
+                    j = (j + 1) % n
+                if j == i:
+                    return i
+        return -1
+gas = [1,2,3,4,5]
+cost = [3,4,5,1,2]
+print(Solution().canCompleteCircuit(gas, cost))
+#Output: 3
+
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        total_wer, curr_wer = 0, 0
+        starting_station = 0
+        for i in range(len(gas)):
+            total_wer += gas[i] - cost[i]
+            curr_wer += gas[i] - cost[i]
+
+            if curr_wer < 0:
+                starting_station = i + 1
+
+                curr_wer = 0
+        return starting_station if total_wer >= 0 else -1
