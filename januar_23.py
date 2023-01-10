@@ -272,3 +272,37 @@ class Solution(object):
 prices = [7,1,5,3,6,4]
 print(Solution().maxProfit(prices))
 #Output: 5
+
+
+'''
+Given a string columnTitle that represents the column title as appears in an Excel sheet, return its corresponding column number.
+
+For example:
+
+A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28 
+
+'''
+
+class Solution(object):
+    def titleToNumber(self, columnTitle):
+        """
+        :type columnTitle: str
+        :rtype: int
+        """
+        res = 0
+        for i in range(len(columnTitle)):
+            res = res * 26 + ord(columnTitle[i]) - ord('A') + 1
+        return res
+
+columnTitle = "A"
+print(Solution().titleToNumber(columnTitle))
+#Output: 1
+columnTitle = "AB"
+print(Solution().titleToNumber(columnTitle))
+#Output: 28
