@@ -9,17 +9,18 @@ Return the number of columns that you will delete.
 '''
 
 
-
 class Solution:
     def minDeletionSize(self, strs):
         count = 0
         for i in range(len(strs[0])):
-            for j in range(len(strs)-1):
-                if strs[j][i] > strs[j+1][i]:
+            for j in range(len(strs) - 1):
+                if strs[j][i] > strs[j + 1][i]:
                     count += 1
                     break
         return count
-strs = ["cba","daf","ghi"]
+
+
+strs = ["cba", "daf", "ghi"]
 print(Solution().minDeletionSize(strs))
 
 '''
@@ -29,12 +30,16 @@ All letters in this word are not capitals, like "leetcode".
 Only the first letter in this word is capital, like "Google".
 Given a string word, return true if the usage of capitals in it is right.
 '''
+
+
 class Solution(object):
     def detectCapitalUse(self, word):
         if word.isupper() or word.islower() or word.istitle():
             return True
         else:
             return False
+
+
 word = "USA"
 print(Solution().detectCapitalUse(word))
 
@@ -77,6 +82,8 @@ You are given the heads of two sorted linked lists list1 and list2.
 Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
 Return the head of the merged linked list.
 '''
+
+
 class Solution(object):
     def mergeTwoLists(self, list1, list2):
         if list1 is None:
@@ -89,10 +96,12 @@ class Solution(object):
         else:
             list2.next = self.mergeTwoLists(list1, list2.next)
             return list2
-list1 = [1,2,4]
-list2 = [1,3,4]
+
+
+list1 = [1, 2, 4]
+list2 = [1, 3, 4]
 print(Solution().mergeTwoLists(list1, list2))
-#Output: [1,1,2,3,4,4]
+# Output: [1,1,2,3,4,4]
 
 '''
 На вход программе подается два натуральных числа aa и bb (a < ba< b). Напишите программу, которая находит все простые числа от aa до bb включительно.
@@ -105,12 +114,12 @@ print(Solution().mergeTwoLists(list1, list2))
 
 Примечание. Число 11 простым не является.
 '''
-a=int(input())
-b=int(input())
-for i in range(a,b+1):
-    if i>1:
-        for j in range(2,i):
-            if i%j==0:
+a = int(input())
+b = int(input())
+for i in range(a, b + 1):
+    if i > 1:
+        for j in range(2, i):
+            if i % j == 0:
                 break
         else:
             print(i)
@@ -120,6 +129,8 @@ Given the root of a binary tree, return its maximum depth.
 
 A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 '''
+
+
 class Solution(object):
     def maxDepth(self, root):
         if root is None:
@@ -137,6 +148,8 @@ Return the maximum number of ice cream bars the boy can buy with coins coins.
 Note: The boy can buy the ice cream bars in any order.
 '''
 from typing import List
+
+
 class Solution:
 
     def maxIceCream(self, costs, coins):
@@ -150,9 +163,10 @@ class Solution:
                 break
         return count
 
+
 coins = 7
-costs = [1,3,2,4,1]
-#Output: 4
+costs = [1, 3, 2, 4, 1]
+# Output: 4
 '''
 Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The relative order of the elements may be changed.
 
@@ -164,15 +178,19 @@ Do not allocate extra space for another array. You must do this by modifying the
 '''
 
 from typing import List
+
+
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         while val in nums:
             nums.remove(val)
         return len(nums)
-nums = [3,2,2,3]
+
+
+nums = [3, 2, 2, 3]
 val = 3
 print(Solution().removeElement(nums, val))
-#Output: 2, nums = [2,2]
+# Output: 2, nums = [2,2]
 
 '''
 There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
@@ -182,6 +200,8 @@ You have a car with an unlimited gas tank and it costs cost[i] of gas to travel 
 Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1. If there exists a solution, it is guaranteed to be unique
 '''
 from typing import List
+
+
 class Solution:
     def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
         n = len(gas)
@@ -197,10 +217,14 @@ class Solution:
                 if j == i:
                     return i
         return -1
-gas = [1,2,3,4,5]
-cost = [3,4,5,1,2]
+
+
+gas = [1, 2, 3, 4, 5]
+cost = [3, 4, 5, 1, 2]
 print(Solution().canCompleteCircuit(gas, cost))
-#Output: 3
+
+
+# Output: 3
 
 class Solution:
     def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
@@ -216,10 +240,13 @@ class Solution:
                 curr_wer = 0
         return starting_station if total_wer >= 0 else -1
 
+
 '''
 Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.
 '''
 from typing import List
+
+
 class Solution:
     def maxPoints(self, points: List[List[int]]) -> int:
         if len(points) <= 2:
@@ -239,12 +266,13 @@ class Solution:
             res = max(res, same + (max(d.values()) if d else 0))
         return res
 
-points = [[1,1],[2,2],[3,3]]
+
+points = [[1, 1], [2, 2], [3, 3]]
 print(Solution().maxPoints(points))
-#Output: 3
-points = [[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]
+# Output: 3
+points = [[1, 1], [3, 2], [5, 3], [4, 1], [2, 3], [1, 4]]
 print(Solution().maxPoints(points))
-#Output: 4
+# Output: 4
 
 '''
 You are given an array prices where prices[i] is the price of a given stock on the ith day.
@@ -253,6 +281,8 @@ You want to maximize your profit by choosing a single day to buy one stock and c
 
 Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 '''
+
+
 class Solution(object):
     def maxProfit(self, prices):
         """
@@ -269,9 +299,11 @@ class Solution(object):
             else:
                 max_profit = max(max_profit, prices[i] - min_price)
         return max_profit
-prices = [7,1,5,3,6,4]
+
+
+prices = [7, 1, 5, 3, 6, 4]
 print(Solution().maxProfit(prices))
-#Output: 5
+# Output: 5
 
 
 '''
@@ -289,6 +321,7 @@ AB -> 28
 
 '''
 
+
 class Solution(object):
     def titleToNumber(self, columnTitle):
         """
@@ -300,9 +333,53 @@ class Solution(object):
             res = res * 26 + ord(columnTitle[i]) - ord('A') + 1
         return res
 
+
 columnTitle = "A"
 print(Solution().titleToNumber(columnTitle))
-#Output: 1
+# Output: 1
 columnTitle = "AB"
 print(Solution().titleToNumber(columnTitle))
-#Output: 28
+# Output: 28
+
+'''
+Given an undirected tree consisting of n vertices numbered from 0 to n-1, which has some apples in their vertices. 
+You spend 1 second to walk over one edge of the tree. Return the minimum time in seconds you have to spend to collect 
+all apples in the tree, starting at vertex 0 and coming back to this vertex.
+
+The edges of the undirected tree are given in the array edges, where edges[i] = [ai, bi] means that exists an edge 
+connecting the vertices ai and bi. Additionally, there is a boolean array hasApple, where hasApple[i] = true means that 
+vertex i has an apple; otherwise, it does not have any apple.
+ 
+'''
+
+
+class Solution(object):
+    def minTime(self, n, edges, hasApple):
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :type hasApple: List[bool]
+        :rtype: int
+        """
+        rian = [[] for _ in range(n)]
+        for i, j in edges:
+            rian[i].append(j)
+            rian[j].append(i)
+
+        def dabl(i, par):
+            temp = 0
+            for children in rian[i]:
+                if (children != par):
+                    temp += dabl(children, i)
+            if ((temp > 0 or hasApple[i]) and par != -1):
+                temp += 2
+            return temp
+
+        return dabl(0, -1)
+
+
+n = 7
+edges = [[0, 1], [0, 2], [1, 4], [1, 5], [2, 3], [2, 6]]
+hasApple = [False, False, True, False, True, True, False]
+print(Solution().minTime(n, edges, hasApple))
+# Output: 8
