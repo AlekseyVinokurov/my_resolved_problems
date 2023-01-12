@@ -9,6 +9,7 @@ Return the number of columns that you will delete.
 '''
 
 
+
 class Solution:
     def minDeletionSize(self, strs):
         count = 0
@@ -396,6 +397,8 @@ Note that:
 Kelvin = Celsius + 273.15
 Fahrenheit = Celsius * 1.80 + 32.00
 '''
+
+
 class Solution(object):
     def convertTemperature(self, celsius):
         """
@@ -403,3 +406,85 @@ class Solution(object):
         :rtype: List[float]
         """
         return [celsius + 273.15, celsius * 1.80 + 32.00]
+
+
+'''
+Вам дано дерево (т. е. связный неориентированный граф, не имеющий циклов), состоящее из n узлов, пронумерованных от 0 до
+n - 1 и ровно n - 1 ребер. Корнем дерева является узел 0, и каждый узел дерева имеет метку, которая представляет собой
+символ нижнего регистра, заданный в метках строки (т. е. узел с номером i имеет метку labels[i]).
+Массив ребер задается в виде ребер [i] = [ai, bi], что означает наличие ребра между узлами ai и bi в дереве.
+Возвращает массив размера n, где ans[i] — количество узлов в поддереве i-го узла, имеющих одинаковую метку.
+как узел я.
+Поддерево дерева T — это дерево, состоящее из узла T и всех его узлов-потомков.
+'''
+
+from collections import defaultdict, Counter
+class Solution(object):
+    def countSubTrees(self, n, edges, labels):
+        """
+                :type n: int
+                :type edges: List[List[int]]
+                :type labels: str
+                :rtype: List[int]
+                """
+        tree = defaultdict(list)
+        for s, e in edges:
+            tree[s].append(e)
+            tree[e].append(s)
+
+        dog = [0] * n
+
+        def cat(node, par):
+            nonlocal dog
+            count = Counter()
+            for nei in tree[node]:
+                if nei != par:
+                    count += cat(nei, node)
+
+            count[labels[node]] += 1
+            dog[node] = count[labels[node]]
+
+            return count
+
+        cat(0, -1)
+        return dog
+
+
+class Solution:
+    def countSubTrees(self, n: int, edges: List[List[int]], labels: str) -> List[int]:
+        # Построим дерево, используя ребра.
+        # Поскольку дерево не ориентировано, нам нужно добавить в дерево оба направления.
+        tree = defaultdict(list)
+        for s, e in edges:
+            tree[s].append(e)
+            tree[e].append(s)
+
+        # Результат длины n будет возвращен в конце.
+        # Он модифицируется в файле dog.
+        dog = [0] * n
+
+        # node текущий node мы изучаем.
+        # par является прямым родительским узлом узла.
+        def cat(node, par):
+            nonlocal dog
+            # Использовать count для хранения количества каждой буквы в поддереве с корнем в текущем узле.
+            # Размер этой хэш-карты (количество) будет не более 26,
+            # Поскольку существует не более 26 строчных английских букв
+            count = Counter()
+            for nei in tree[node]:
+                # Убедиться, что мы не возвращаемся к его родительскому узлу.
+                if nei != par:
+                    # Обновить счетчик с частотой букв в дочерних узлах
+                     #Это то же самое, что пройти от a до z и увеличить частоту каждой буквы.
+                    count += cat(nei, node)
+
+            # Добавление 1 к счету с текущей меткой
+            count[labels[node]] += 1
+            # Обновить результат.
+            dog[node] = count[labels[node]]
+
+            return count
+
+        # Начиная с узла 0, и назначить для него фальшивый родитель -1.
+        cat(0, -1)
+        return dog
