@@ -488,3 +488,36 @@ class Solution:
         # Начиная с узла 0, и назначить для него фальшивый родитель -1.
         cat(0, -1)
         return dog
+
+'''
+Вам дано большое целое число, представленное в виде целочисленного массива цифр, где каждая цифра[i] — это i-я цифра целого числа.
+Цифры упорядочены от наиболее значащего к наименее значащему в порядке слева направо. Большое целое число не содержит ведущих нулей.
+
+Увеличьте большое целое число на единицу и верните результирующий массив цифр.
+'''
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        num = 0
+        i = 10 ** (len(digits) - 1)
+        for x in range(0, len(digits)):
+            num = num + digits[x] * i
+            i = i / 10
+        num += 1
+        digits = list(map(int, str(num)))
+        return digits
+
+    def plusOne(self, digits):
+        for i in range(len(digits) - 1, -1, -1):
+            if digits[i] == 9:
+                digits[i] = 0
+            else:
+                digits[i] += 1
+                return digits
+
+        digits.append(0)
+        digits[0] = 1
+        return digits
