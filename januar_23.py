@@ -538,3 +538,61 @@ class Solution:
         return i + 1
 nums = [1,1,2]
 print(Solution().removeDuplicates(nums))
+'''
+In a town, there are n people labeled from 1 to n. There is a rumor that one of these people is secretly the town judge.
+
+If the town judge exists, then:
+
+The town judge trusts nobody.
+Everybody (except for the town judge) trusts the town judge.
+There is exactly one person that satisfies properties 1 and 2.
+You are given an array trust where trust[i] = [ai, bi] representing that the person labeled ai trusts the person labeled bi.
+
+Return the label of the town judge if the town judge exists and can be identified, or return -1 otherwise.
+'''
+class Solution:
+    def findJudge(self, n, trust):
+        if n == 1:
+            return 1
+        trust_dict = {}
+        for i in range(1, n + 1):
+            trust_dict[i] = 0
+        for i in trust:
+            trust_dict[i[0]] -= 1
+            trust_dict[i[1]] += 1
+        for i in trust_dict:
+            if trust_dict[i] == n - 1:
+                return i
+        return -1
+n = 3
+trust = [[1,3],[2,3]]
+print(Solution().findJudge(n, trust))
+
+'''
+Требуется написать регулярное выражение, которое находит все:
+
+Слова, состоящие из кириллических символов, но в них есть как минимум 1 некириллический символ
+Слова, состоящие из некириллических символов, но в них есть как минимум 1 кириллический символ
+Слова, состоящие полностью из кириллических или некириллических символов игнорируем. Знаки препинания  странными символами не считаются.
+
+Примеры:
+Input 1:
+О, х0т табc. A что такое табс? Я зашéл нe туда, кyда н4до. Почему это твич не 3абанил - не совсем понятно. Господа, я полагаю стрим надо быстро заканчивать, и удалять...
+Output 1:
+х0т табc зашéл нe кyда н4до 3абанил
+Input 2:
+Я в шkaфy пpячycь.
+Output 2:
+шkaфy пpячycь
+Input 3:
+Бpо, тeбe нaд0 тp3нирÖвÆтьçя.
+Output 3:
+Бpо тeбe нaд0 тp3нирÖвÆтьçя
+Input 4:
+Нacтaл0 ßремя бросить 3aгaд0чный взгляд B мек©иканской шляпe и начать план $cаm.
+Output 4:
+Нacтaл0 ßремя 3aгaд0чный мек©иканской шляпe $cаm
+'''
+import re
+s = input()
+
